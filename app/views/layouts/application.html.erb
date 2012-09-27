@@ -16,6 +16,11 @@
     <%= yield %>
     </div>
 	<%= render 'layouts/footer' %>
-	<%= debug(params) if Rails.env.development? %>
+	<% if Rails.env.development? %>
+		<%= debug(params) %>
+		<pre class='debug_params'>
+			Is from localhost? <%= request.local?  %>
+		</pre>
+	<% end %>
 </body>
 </html>

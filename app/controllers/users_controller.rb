@@ -2,7 +2,11 @@ class UsersController < ApplicationController
 	before_filter	:signed_in_user, 	only: [:index, :edit, :update]
 	before_filter	:correct_user,		only: [:edit, :update]
 	before_filter	:admin_user,		only: [:destroy]
-  def new
+	before_filter	:prevent_admin_suicide,		only: [:destroy]
+	before_filter	:already_existing_user,		only: [:create, :new]
+
+
+	def new
     @user = User.new
   end
   
@@ -39,7 +43,7 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    User.find(params[:id]).destroy
+    @user_to_destroy.destroy
 	flash[:success] = "User correctly deleted"
 	redirect_to users_path
   end
@@ -59,5 +63,18 @@ class UsersController < ApplicationController
 	
 	def admin_user
 		redirect_to root_path unless current_user.admin?
+	end
+
+	def prevent_admin_suicide
+		@user_to_destroy = User.find(params[:id])
+		if current_user?(@user_to_destroy)
+			flash[:notice] = "cannot destry yourself"
+			redirect_to users_path 
+		end
+	end
+
+	
+	def already_existing_user
+		redirect_to root_path unless !signed_in?
 	end
 end
