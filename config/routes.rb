@@ -1,4 +1,10 @@
 SampleApp::Application.routes.draw do
+  get "microposts/index"
+
+  get "microposts/create"
+
+  get "microposts/destroy"
+
 	resources 		:users
 	resources 		:sessions, 		only: [:new, :create, :destroy]
 	resources 		:microposts,	only: [:create, :destroy]
