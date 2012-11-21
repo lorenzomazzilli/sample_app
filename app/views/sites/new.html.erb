@@ -1,0 +1,13 @@
+<% provide(:title, 'New Site') %>
+<h1>Create new site</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@site) do |f| %>
+		<%= render 'shared/error_messages', object: f.object %>
+		<%= render 'fields', f: f %>
+
+      <%= f.submit "Create my site", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>
