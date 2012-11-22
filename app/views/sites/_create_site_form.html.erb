@@ -1,0 +1,5 @@
+<% if current_user?(@user) %>
+  <div id="create_site_form">
+	<%= link_to "Create Site", new_site_path, class: "btn btn-large btn-primary" %>
+  </div>
+<% end %>

@@ -1,6 +1,6 @@
 class SitesController < ApplicationController
 
-	before_filter	:correct_user, only: [:destroy]
+	before_filter	:correct_user, only: [:edit, :destroy, :update]
 	
   def new
 	@site = current_user.sites.new  
@@ -28,7 +28,12 @@ class SitesController < ApplicationController
   end
   
   def update
-
+	if(@site.update_attributes(params[:site]))
+		flash[:success]= "Site updated successfully"
+		redirect_to @site.user
+	else
+		render 'edit'
+	end	
   end
   
   def destroy
